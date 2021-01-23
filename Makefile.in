@@ -649,30 +649,31 @@ install-host-mpc: stmp-install-host-mpc
 # host ppl rules
 .PHONY: config-host-ppl build-host-ppl install-host-ppl
 config-host-ppl: stmp-config-host-ppl
-PPL_CONFIG_ARGS=$(host_baseargs) --prefix=$(TEMP_INSTALLDIR) --disable-shared \
-	  --target=${target_alias} \
-	  --host=${host} --build=${build} \
-	  --disable-nls \
-	  --disable-watchdog --without-java \
-	  --disable-ppl_lcdd --disable-ppl_lpsol --disable-ppl_pips
+#PPL_CONFIG_ARGS=$(host_baseargs) --prefix=$(TEMP_INSTALLDIR) --disable-shared \
+#	  --target=${target_alias} \
+#	  --host=${host} --build=${build} \
+#	  --disable-nls \
+#	  --disable-watchdog --without-java \
+#	  --disable-ppl_lcdd --disable-ppl_lpsol --disable-ppl_pips
 stmp-config-host-ppl: config.status stmp-install-host-gmp
-	([ -d ${PPL_VERSION} ] || \
-	 mkdir ${PPL_VERSION}) && \
-	($(canadian_env) \
-	 cd ${PPL_VERSION} ; \
-         export CFLAGS="${CFLAGS} -I$(GMP_DIR)/include" ; \
-         export CXXFLAGS="${CFLAGS} -I$(GMP_DIR)/include" ; \
-         export LDFLAGS="${LDFLAGS} -L$(GMP_DIR)/lib" ; \
-	$(call find-package-srcdir, ${PPL_VERSION})/configure \
-	 $(PPL_CONFIG_ARGS)) && \
+#	([ -d ${PPL_VERSION} ] || \
+#	 mkdir ${PPL_VERSION}) && \
+#	($(canadian_env) \
+#	 cd ${PPL_VERSION} ; \
+#         export CFLAGS="${CFLAGS} -I$(GMP_DIR)/include" ; \
+#         export CXXFLAGS="${CFLAGS} -I$(GMP_DIR)/include" ; \
+#         export LDFLAGS="${LDFLAGS} -L$(GMP_DIR)/lib" ; \
+#	$(call find-package-srcdir, ${PPL_VERSION})/configure \
+#	 $(PPL_CONFIG_ARGS)) && \
 	$(STAMP) $@
 stmp-build-host-ppl: stmp-config-host-ppl
-	$(MAKE) -C ${PPL_VERSION} && $(STAMP) $@
+#	$(MAKE) -C ${PPL_VERSION} &&
+	$(STAMP) $@
 build-host-ppl: stmp-build-host-ppl
 
 ifeq ($(ENABLE_GRAPHITE),yes)
 stmp-install-host-ppl: stmp-build-host-ppl
-	$(MAKE) -C ${PPL_VERSION} install && \
+#	$(MAKE) -C ${PPL_VERSION} install && \
 	$(STAMP) $@
 else
 stmp-install-host-ppl:
